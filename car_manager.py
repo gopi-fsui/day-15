@@ -1,7 +1,6 @@
-
 import math
 
-COLORS = ["red", "orange", "yellow", "green", "blue", "purple"]
+COLORS = ["red", "orange", "skyblue", "green", "blue", "purple"]
 STARTING_MOVE_DISTANCE = 5
 MOVE_INCREMENT = 10
 from turtle import Turtle
@@ -12,26 +11,26 @@ class CarManager:
     def __init__(self):
         self.cars = []
         self.move_distance = STARTING_MOVE_DISTANCE
-        for x in range(-280,280,random.choice([40,50,60])):
+        for x in range(-280,280,random.choice([30,40])):
             self.add_cars(x)
 
 
     def add_cars(self,x_value):
-        car_count = random.randint(0, 2)
+        car_count = random.randint(0, int(self.move_distance/5))
         for _ in range(car_count):
             new_car = Turtle("square")
             new_car.penup()
             new_car.shapesize(1, 2.5, 1)
             new_car.color(random.choice(COLORS))
             # new_car.goto(x_value, (random.randint(-25,25))*10)
-            new_car.goto(x_value, random.randint(-250,250))
+            new_car.goto(x_value, random.randint(-25,25)*10)
             self.cars.append(new_car)
 
     def move_forward(self):
         for car in self.cars:
             car.goto(car.xcor()-self.move_distance,car.ycor())
 
-        if random.random() < .2:
+        if random.random() < .25:
             self.add_cars(280)
 
 
@@ -44,7 +43,7 @@ class CarManager:
             if abs(car.ycor()- player.ycor()) < 20 and math.ceil(player.distance(car)) < 30:
                 print(f"first one {car.ycor()} - {player.ycor()} = {abs(car.ycor()- player.ycor())} and dis is {math.ceil(player.distance(car))}")
                 return True
-            elif math.ceil(player.distance(car)) < 20:
+            elif math.ceil(player.distance(car)) < 24:
                 print(f"Second - {math.ceil(player.distance(car))}")
                 return True
 
